@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AaronWilson113/Express-Note-Taker/issues"
   },
-  "homepage": "https://github.com/AaronWilson113/Express-Note-Taker#readme"
+  "homepage": "https://github.com/AaronWilson113/Express-Note-Taker#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
