@@ -1,14 +1,14 @@
 {
-    "notes_db": [
-        {
-            "title": "Note Title",
-            "text": "te",
-            "id": 1
-        },
-        {
-            "title": "alsk",
-            "text": "te",
-            "id": 2
-        }
+    "notes": [
+      {
+        "title": "a",
+        "text": "a",
+        "id": "0"
+      },
+      {
+        "title": "b",
+        "text": "b",
+        "id": "1"
+      }
     ]
-}
+  }
