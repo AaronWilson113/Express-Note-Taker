@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 });
 
 // route to retrieve notes html file and render it to the page
-router.get('/', (req, res) => {
+router.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/notes.html'));
 });
 
