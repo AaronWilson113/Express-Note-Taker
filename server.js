@@ -1,6 +1,7 @@
 // requiring npm modules
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 // setting up server with express
 const app = express();
@@ -13,6 +14,7 @@ const htmlRoutes = require('./routes/htmlRoutes');
 // setting up get routes 
 app.use('/api', apiRoutes);
 app.use('/', htmlRoutes)
+
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
