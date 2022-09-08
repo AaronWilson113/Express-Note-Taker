@@ -4,21 +4,25 @@ const fs = require('fs');
 const { createNewNote, deleteNote} = require('../../lib/noteFunctions')
 const notes = require('../../db/db.json');
 
-
-router.get('/notes', (req, res) => {
-    let results = notes;
-
-    console.log("Result: " +JSON.stringify(results));
-
-    res.json(results.db.json);
+router.delete('/notes/:id', (req, res) => {
+    deleteNote(notes, req.params.id);
+    res.json(notes);
 });
 
+
+router.get('/notes', (req, res) => {
+    let note = notes;
+
+    res.json(note)
+});
+
+
 router.post('/notes', (req, res) => {
-    req.body.id = notes['notes_db'].length +1;
+    req.body.id = notes.length.toString();
 
-    const newNotes = createNewNote(req.body, notes);
+    let note = createNewNote(req.body, notes);
 
-    res.json(newNotes);
+    res.json(note);
     
 });
 
