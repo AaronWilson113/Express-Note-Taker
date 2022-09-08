@@ -1,6 +1,14 @@
-[
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
+{
+    "notes_db": [
+        {
+            "title": "Note Title",
+            "text": "te",
+            "id": 1
+        },
+        {
+            "title": "alsk",
+            "text": "te",
+            "id": 2
+        }
+    ]
+}
