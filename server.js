@@ -33,25 +33,36 @@ router.delete('/notes/:id', (req, res) => {
 
 
 
-// post route for getting notes from database
+// post route for posting notes to db
 app.post('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', (err, data) => {
       if (err) throw err;
 
-      var notes = JSON.parse(data);
+      var notePad = JSON.parse(data);
 
-      let userNote = req.body;
+      let userNotePad = req.body;
 
-      userNote.id = Math.floor(Math.random() * 5000);
+      userNotePad.id = Math.floor(Math.random() * 5000);
 
-      notes.push(userNote);
+      notePad.push(userNotePad);
 
-    fs.writeFile('./db/db.json', JSON.stringify(notes), (err, data) => {
-        res.json(userNote);
+    fs.writeFile('./db/db.json', JSON.stringify(notePad), (err, data) => {
+        res.json(userNotePad);
     });
     }); 
   });
 
+  // get route for retrieving notes from db
+  app.get('/api/notes', (req, res) => {
+    fs.readFile('./db/db.json', (err, data) => {
+
+      if (err) throw err;
+      
+      var notePad = JSON.parse(data);
+
+      res.json(notePad);
+    });
+  });
 
 // setting up server to listen upon npm start
 app.listen(PORT, () => {
