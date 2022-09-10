@@ -7,15 +7,6 @@ const fs = require('fs');
 const app = express();
 const PORT = 3001;
 
-// declare variables for routes
-
-const apiRoutes = require('./routes/apiRoutes');
-
-// get routes
-
-app.use('/api', apiRoutes);
-
-
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,10 +20,53 @@ app.get('/notes', (req, res) => {
 // get route for out landing page to render it to the page
 app.get('/', (req, res) => {
    res.sendFile(path.join(__dirname, '/public/index.html'));
-});   
+});  
 
 
 
+// post route for posting notes to db
+app.post('/api/notes', (req, res) => {
+    fs.readFile('./db/db.json', (err, data) => {
+      if (err) throw err;
+
+      var notePad = JSON.parse(data);
+
+      let userNotePad = req.body;
+
+      userNotePad.id = Math.floor(Math.random() * 5000);
+
+      notePad.push(userNotePad);
+
+    fs.writeFile('./db/db.json', JSON.stringify(notePad), (err, data) => {
+        res.json(userNotePad);
+    });
+    }); 
+  });
+
+  // get route for retrieving notes from db
+  app.get('/api/notes', (req, res) => {
+    fs.readFile('./db/db.json', (err, data) => {
+
+      if (err) throw err;
+      
+      var notePad = JSON.parse(data);
+
+      res.json(notePad);
+    });
+  });
+
+  // delete route for deleting routes from db 
+  app.delete('/api/notes/:id', (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+      if (err) throw err;
+      let notePad = JSON.parse(data);
+      const newNotePad = notePad.filter(note => note.id !== parseInt(req.params.id));
+    
+    fs.writeFile('./db/db.json', JSON.stringify(newNotePad), (err, data) => {
+      res.json({msg: 'successfully'});
+    });
+  });
+  });
 
 // setting up server to listen upon npm start
 app.listen(PORT, () => {
