@@ -12,16 +12,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// get route for our notes.html page to render it to the page. 
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'))
-});
 
-// get route for out landing page to render it to the page
-app.get('/', (req, res) => {
-   res.sendFile(path.join(__dirname, '/public/index.html'));
-});  
+// declaring variable for html route
+const htmlRoutes = require('./routes/htmlRoutes');
 
+
+// getting html route
+app.use('/', htmlRoutes);
 
 
 // post route for posting notes to db
