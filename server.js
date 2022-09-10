@@ -7,18 +7,47 @@ const fs = require('fs');
 const app = express();
 const PORT = 3001;
 
-// setting up variables for routes
-const apiRoutes = require('./routes/apiRoutes');
-const htmlRoutes = require('./routes/htmlRoutes');
-
-// setting up get routes 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes)
-
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+// get route for our notes.html page to render it to the page. 
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+});
+
+// get route for out landing page to render it to the page
+app.get('/', (req, res) => {
+   res.sendFile(path.join(__dirname, '/public/index.html'));
+});   
+
+// requiring modules 
+const router = require('express').Router();
+const notes = require('./db/db.json');
+
+router.delete('/notes/:id', (req, res) => {
+    deleteNote(notes, req.params.id);
+    res.json(notes);
+});
+
+
+router.get('/notes', (req, res) => {
+    let note = notes;
+
+    res.json(note)
+});
+
+
+router.post('/notes', (req, res) => {
+    req.body.id = notes.length.toString();
+
+    let note = createNewNote(req.body, notes);
+
+    res.json(note);
+    
+});
+
 
 // setting up server to listen upon npm start
 app.listen(PORT, () => {
