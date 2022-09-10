@@ -22,16 +22,6 @@ app.get('/', (req, res) => {
    res.sendFile(path.join(__dirname, '/public/index.html'));
 });   
 
-// requiring modules 
-const router = require('express').Router();
-const notes = require('./db/db.json');
-
-router.delete('/notes/:id', (req, res) => {
-    deleteNote(notes, req.params.id);
-    res.json(notes);
-});
-
-
 
 // post route for posting notes to db
 app.post('/api/notes', (req, res) => {
@@ -62,6 +52,19 @@ app.post('/api/notes', (req, res) => {
 
       res.json(notePad);
     });
+  });
+
+  // delete route for deleting routes from db 
+  app.delete('/api/notes/:id', (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+      if (err) throw err;
+      let notePad = JSON.parse(data);
+      const newNotePad = notePad.filter(note => note.id !== parseInt(req.params.id));
+    
+    fs.writeFile('./db/db.json', JSON.stringify(newNotePad), (err, data) => {
+      res.json({msg: 'successfully'});
+    });
+  });
   });
 
 // setting up server to listen upon npm start
