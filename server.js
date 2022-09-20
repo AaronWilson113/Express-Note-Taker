@@ -5,7 +5,7 @@ const fs = require('fs');
 
 // setting up server with express
 const app = express();
-const PORT = 3001;
+const PORT = (process.env.PORT || 3001);
 
 // middleware
 app.use(express.json());
